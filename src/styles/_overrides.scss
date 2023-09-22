@@ -1,0 +1,13 @@
+// overriding default bootstrap vars
+$orange:                          #f18c2c;
+$primary:                         $orange;
+$pink:                            #efbaba;
+$success:                         $primary;
+$form-range-track-height:         .1rem;
+$form-range-thumb-width:          1.2rem;
+$form-range-thumb-height:         1.2rem;
+$input-bg:                        transparent;
+$input-border-color:              rgba($pink, .25);
+$form-check-input-border:         1px solid rgba($pink, .25);
+
+@import "node_modules/bootstrap/scss/bootstrap";
