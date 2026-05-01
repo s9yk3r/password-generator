@@ -114,9 +114,9 @@ onMounted(generatePassword)
                    class="form-label d-inline-block">Generated password</label>
             <div class="input-group">
                 <input type="text"
-                       class="form-control bg-dark text-white border-secondary"
+                       class="form-control text-white border-secondary"
                        id="newPassword"
-                       readonly
+                       disabled
                        :value="newPassword">
                 <button class="btn btn-copy fw-bold"
                         @click="copyToClipboard"
@@ -133,11 +133,11 @@ onMounted(generatePassword)
             </div>
         </div>
 
-        <div class="form-group mb-4">
-            <div class="d-flex justify-content-between align-items-center">
+        <div class="form-group mb-4 d-flex flex-column justify-content-center align-items-center">
+            <div class="psw-length-label d-flex justify-content-between align-items-center">
                 <label for="passwordLength"
                        class="form-label">Length</label>
-                <span class="badge bg-primary fs-6">
+                <span class="badge fs-6">
                     {{ passwordLength }}
                 </span>
             </div>
@@ -181,8 +181,14 @@ onMounted(generatePassword)
 </template>
 
 <style scoped lang="scss">
+$dark-green: #35495e;
+$green: #42b883;
+$btn-text-color: #213547;
+$dark-grey: #2f2f2f;
+
+// TODO finire di cssizzare
 .password-generator-card {
-    background-color: rgba(58, 28, 49, 0.75) !important;
+    background-color: $dark-green !important;
     backdrop-filter: blur(12px);
     border-radius: 16px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
@@ -192,6 +198,11 @@ onMounted(generatePassword)
     .form-label {
         font-weight: 700;
         color: rgba(255, 255, 255, 0.9);
+
+        & + .badge {
+            background: $dark-grey;
+            width: 50px;
+        }
     }
 
     .options-grid {
@@ -209,10 +220,12 @@ onMounted(generatePassword)
             width: 3em;
             height: 1.5em;
             cursor: pointer;
+            outline: none;
+            box-shadow: none;
 
             &:checked {
-                background-color: #f18c2c;
-                border-color: #f18c2c;
+                background-color: $green;
+                border-color: transparent;
             }
         }
 
@@ -222,9 +235,20 @@ onMounted(generatePassword)
         }
     }
 
+    .psw-length-label,
+    .form-range {
+        width: 249px;
+    }
+
+    .form-control {
+        background: $dark-grey;
+        outline: none;
+        box-shadow: none;
+    }
+
     .btn-copy {
-        background: linear-gradient(45deg, #ffce9f 0%, #f18c2c 100%);
-        color: #000;
+        background: $green;
+        color: $btn-text-color;
         border: none;
 
         &:hover {
@@ -233,9 +257,9 @@ onMounted(generatePassword)
     }
 
     .btn-generate {
-        background: linear-gradient(45deg, #f1c2c2 0%, #d43434 100%);
+        background: linear-gradient($dark-grey, $dark-grey) padding-box, linear-gradient(45deg, #42d392, #647eff) border-box;
+        border: 2px solid #0000;
         color: white;
-        border: none;
         transition: transform 0.2s;
 
         &:active {
@@ -247,13 +271,13 @@ onMounted(generatePassword)
         position: absolute;
         top: 0;
         right: -93px;
-        background-color: #ffc0cb;
-        color: #000;
+        background-color: $green;
+        color: $btn-text-color;
         padding: 8px 15px;
-        border-radius: 8px;
+        border-radius: 8px !important;
         font-size: 0.85rem;
         font-weight: bold;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
         height: 38px;
 
         &::before {
@@ -262,9 +286,9 @@ onMounted(generatePassword)
             left: -10px;
             top: 50%;
             transform: translateY(-50%);
-            border-top: 8px solid transparent;
-            border-bottom: 8px solid transparent;
-            border-right: 10px solid #ffc0cb;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            border-right: 10px solid $green;
         }
     }
 }

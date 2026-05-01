@@ -17,5 +17,19 @@ const customLength = 24
 body {
     background-color: #1a1a1a;
     min-height: 100vh;
+    user-select: none;
+
+    h1 {
+        -webkit-text-fill-color: transparent;
+        background: -webkit-linear-gradient(315deg,#42d392 25%,#647eff);
+        background-clip: border-box;
+        -webkit-background-clip: text;
+        background-clip: text;
+        letter-spacing: -1.5px;
+        margin: 0 auto;
+        font-size: 76px;
+        font-weight: 900;
+        line-height: 1.25;
+    }
 }
 </style>
