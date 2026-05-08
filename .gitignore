@@ -1,0 +1,21 @@
+.DS_Store
+
+# IDE Files
+#-------------------------
+/nbproject/
+.idea/*
+.vscode/*
+./windsurf/*
+.aiassistant/
+
+## Sublime Text cache files
+*.tmlanguage.cache
+*.tmPreferences.cache
+*.stTheme.cache
+*.sublime-workspace
+*.sublime-project
+/tests/tests/
+/tests/results/
+/node_modules/
+/qodana.yaml
+/psalm.xml

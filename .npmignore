@@ -1,0 +1,14 @@
+src/
+public/
+vite.config.js
+.gitignore
+.gitattributes
+babel.config.js
+eslint.config.js
+index.html
+jsconfig.json
+LICENSE.md
+README.md
+package-lock.json
+package.json
+*.log
