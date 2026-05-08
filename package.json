@@ -1,0 +1,51 @@
+{
+    "name": "password-generator",
+    "version": "1.0.0",
+    "private": false,
+    "type": "module",
+    "files": [
+        "dist"
+    ],
+    "main": "./dist/password-generator.umd.js",
+    "module": "./dist/password-generator.es.js",
+    "exports": {
+        ".": {
+            "import": "./dist/password-generator.es.js",
+            "require": "./dist/password-generator.umd.js"
+        },
+        "./style.css": "./dist/password-generator.css"
+    },
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "peerDependencies": {
+        "@fortawesome/vue-fontawesome": "^3.2.0",
+        "bootstrap": "^5.0.0",
+        "vue": "^3.0.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^6.0.5",
+        "@vue/eslint-config-standard": "^9.0.1",
+        "esbuild": "^0.28.0",
+        "eslint": "^9.39.4",
+        "eslint-plugin-import": "^2.32.0",
+        "eslint-plugin-n": "^17.24.0",
+        "eslint-plugin-promise": "^7.2.1",
+        "eslint-plugin-vue": "^9.33.0",
+        "jsdom": "^29.0.2",
+        "lightningcss": "^1.32.0",
+        "rollup-obfuscator": "^4.1.1",
+        "rollup-plugin-delete": "^3.0.2",
+        "sass": "^1.98.0",
+        "start-server-and-test": "^3.0.2",
+        "stylelint": "^17.4.0",
+        "stylelint-config-standard": "^40.0.0",
+        "vite": "^8.0.0",
+        "vite-plugin-vue-devtools": "^8.1.0",
+        "vitest": "^4.1.0",
+        "@fortawesome/fontawesome-svg-core": "^7.2.0",
+        "@fortawesome/free-solid-svg-icons": "^7.2.0"
+    }
+}
