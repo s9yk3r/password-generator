@@ -1,28 +1,26 @@
 import js from '@eslint/js'
-import globals from 'globals'
+import { defineConfig, globalIgnores } from 'eslint/config'
 import pluginVue from 'eslint-plugin-vue'
-import vueConfigStandard from '@vue/eslint-config-standard'
-import { defineConfig } from 'eslint/config'
+import globals from 'globals'
+import tseslint from 'typescript-eslint'
 
 export default defineConfig([
   {
-    files: ['**/*.{js,mjs,cjs,vue}'],
+    name: 'app/files-to-lint',
+    files: ['**/*.{js,mjs,jsx,vue,ts,tsx}'],
+  },
+
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+
+  {
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
       globals: {
         ...globals.browser,
-        ...globals.node
-      }
-    }
+      },
+    },
   },
+
   js.configs.recommended,
   ...pluginVue.configs['flat/essential'],
-  ...vueConfigStandard,
-  {
-    rules: {
-      'vue/multi-word-component-names': 'off',
-      'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
-    }
-  }
+  ...tseslint.configs.recommended,
 ])
