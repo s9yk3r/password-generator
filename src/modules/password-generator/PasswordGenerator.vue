@@ -1,42 +1,52 @@
-<script setup>
-import { ref, reactive, onMounted } from 'vue'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+<script setup lang="ts">
 import { faCopy } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { onMounted, reactive, ref } from 'vue'
 
-const props = defineProps({
-  initialLength: {
-    type: Number,
-    default: 16
-  }
+interface Settings {
+  letters: boolean
+  numbers: boolean
+  symbols: boolean
+}
+
+interface Labels {
+  [key: string]: string
+}
+
+interface CharsetMap {
+  [key: string]: string
+}
+
+interface Props {
+  initialLength: number
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  initialLength: 16,
 })
 
 const passwordLength = ref(props.initialLength)
 const newPassword = ref('')
 const copied = ref(false)
 
-const settings = reactive({
+const settings = reactive<Settings>({
   letters: true,
   numbers: true,
-  symbols: true
+  symbols: true,
 })
 
-const labels = {
+const labels: Labels = {
   letters: 'Letters (A-Z, a-z)',
   numbers: 'Numbers (0-9)',
-  symbols: 'Symbols (!$@#%&?^)'
+  symbols: 'Symbols (!$@#%&?^)',
 }
 
-const charsetMap = {
+const charsetMap: CharsetMap = {
   letters: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ',
   numbers: '0123456789',
-  symbols: '!$@#%&?^'
+  symbols: '!$@#%&?^',
 }
 
-/**
- * Generates a random password based on the current settings and updates the relevant reactive properties.
- *
- * The function uses cryptographically secure random values to ensure unpredictability.
- */
 const generatePassword = () => {
   copied.value = false
 
@@ -59,13 +69,21 @@ const generatePassword = () => {
     return
   }
 
-  const randomValues = new Uint32Array(passwordLength.value)
-  window.crypto.getRandomValues(randomValues)
+  const charSetLength = charSet.length
+  const maxValidValue = Math.floor(0xffffffff / charSetLength) * charSetLength
 
   let generated = ''
 
-  for (let i = 0; i < passwordLength.value; i++) {
-    generated += charSet[randomValues[i] % charSet.length]
+  while (generated.length < passwordLength.value) {
+    const randomValues = new Uint32Array(passwordLength.value - generated.length)
+    window.crypto.getRandomValues(randomValues)
+
+    for (const value of randomValues) {
+      if (value < maxValidValue) {
+        generated += charSet[value % charSetLength]
+        if (generated.length === passwordLength.value) break
+      }
+    }
   }
 
   newPassword.value = generated
@@ -73,19 +91,6 @@ const generatePassword = () => {
   copyToClipboard()
 }
 
-/**
- * Copies the current value of `newPassword` to the clipboard.
- *
- * This function checks if a value exists in the `newPassword` field before attempting to copy it.
- * If successful, it updates the `copied` state to `true` for a short duration (2 seconds)
- * to indicate a successful copy operation.
- * In the event of a failure, an error is logged to the console.
- *
- * The function makes use of the Clipboard API for copying text to the clipboard.
- *
- * @returns {Promise<void>} Resolves when the text is successfully copied or immediately
- * returns if no value exists in `newPassword`.
- */
 const copyToClipboard = async () => {
   if (!newPassword.value) {
     return
@@ -186,7 +191,6 @@ $green: #42b883;
 $btn-text-color: #213547;
 $dark-grey: #2f2f2f;
 
-// TODO finire di cssizzare
 .password-generator-card {
     background-color: $dark-green !important;
     backdrop-filter: blur(12px);
